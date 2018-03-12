@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/net/beer_data.dart';
 import 'package:flutter_app/net/beer_rest.dart';
@@ -16,7 +18,8 @@ class _BeerListPageState extends State<BeerListPage> {
 	List<BeerData> beerList = new List();
 
 	void _itemClicked(BuildContext context, int index) async {
-		Navigator.of(context).pushNamed('beer_details/${beerList[index].id}');
+		final beerJson = JSON.encode(beerList[index].toMap());
+		Navigator.of(context).pushNamed('beer_details|||$beerJson');
 	}
 
 	Widget _createItemBuilder(BuildContext context, int index) {

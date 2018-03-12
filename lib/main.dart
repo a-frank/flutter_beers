@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_app/net/beer_data.dart';
 
 import 'beer_details.dart';
 import 'beer_list_page.dart';
@@ -14,10 +17,10 @@ class BeerApp extends StatelessWidget {
 			),
 			home: new BeerListPage(title: 'The Beers App'),
 			onGenerateRoute: (routeSettings) {
-				var path = routeSettings.name.split('/');
+				var path = routeSettings.name.split('|||');
 				if (path[0] == 'beer_details') {
-					final beerId = path.length > 1 ? int.parse(path[1]) : null;
-					return new MaterialPageRoute(builder: (context) => new BeerDetailsPage(beerId: beerId), settings: routeSettings);
+					final BeerData beer = path.length > 1 ? new BeerData.fromMap(JSON.decode(path[1])) : null;
+					return new MaterialPageRoute(builder: (context) => new BeerDetailsPage(beer: beer), settings: routeSettings);
 				}
 			},
 		);
