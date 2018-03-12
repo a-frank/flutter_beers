@@ -29,7 +29,10 @@ class _BeerListPageState extends State<BeerListPage> {
 					child: new ListTile(
 						leading: new CircleAvatar(
 								backgroundColor: new Color.fromARGB(255, 200, 200, 200),
-								child: new Image(image: new NetworkImage(beerList[index].imageUrl))
+								child: new Padding(
+										padding: const EdgeInsets.all(4.0),
+										child: new Image(image: new NetworkImage(beerList[index].imageUrl))
+								)
 						),
 						title: new Text(beerList[index].name),
 						subtitle: new Text(beerList[index].tagLine, maxLines: 1, overflow: TextOverflow.ellipsis),
