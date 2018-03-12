@@ -6,8 +6,6 @@ import 'package:flutter_app/net/beer_data.dart';
 import 'package:flutter_app/net/beer_rest.dart';
 
 class BeerListPage extends StatefulWidget {
-	BeerListPage({Key key}) : super(key: key);
-
 	@override
 	_BeerListPageState createState() => new _BeerListPageState();
 }

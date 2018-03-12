@@ -16,26 +16,20 @@ class BeerRest {
 		return _getBeerList(uri);
 	}
 
-	Future<BeerData> getSingleBeer(int id) async {
-		final uri = new Uri.http(BASE_URL, BEERS_API + '/$id');
-		var beerList = await _getBeerList(uri);
-		return beerList.firstWhere((beer) => beer.id == id, orElse: null);
-	}
-
 	Future<List<BeerData>> _getBeerList(Uri uri) async {
-		var beerData = _fromWeb(uri);
-		// var beerData = _fromAssets();
-		final List mappedJsonData = JSON.decode(await beerData);
+		var beerData = await _fromWeb(uri);
+		// var beerData = await _fromAssets();
+		final List mappedJsonData = JSON.decode(beerData);
 		return mappedJsonData.map((entity) => new BeerData.fromMap(entity)).toList();
 	}
 
 	Future<String> _fromWeb(Uri uri) async {
 		final request = await httpClient.getUrl(uri);
 		final response = await request.close();
-		return await response.transform(UTF8.decoder).join();
+		return response.transform(UTF8.decoder).join();
 	}
 
 	Future<String> _fromAssets() async {
-		return await rootBundle.loadString('assets/beers.jon');
+		return rootBundle.loadString('assets/beers.jon');
 	}
 }
