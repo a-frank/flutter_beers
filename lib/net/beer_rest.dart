@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_app/net/beer_data.dart';
 
 const BASE_URL = 'api.punkapi.com';
@@ -18,18 +19,23 @@ class BeerRest {
 	Future<BeerData> getSingleBeer(int id) async {
 		final uri = new Uri.http(BASE_URL, BEERS_API + '/$id');
 		var beerList = await _getBeerList(uri);
-		if (beerList.length > 0) {
-			return beerList[0];
-		} else {
-			return null;
-		}
+		return beerList.firstWhere((beer) => beer.id == id, orElse: null);
 	}
 
 	Future<List<BeerData>> _getBeerList(Uri uri) async {
+		var beerData = _fromWeb(uri);
+		// var beerData = _fromAssets();
+		final List mappedJsonData = JSON.decode(await beerData);
+		return mappedJsonData.map((entity) => new BeerData.fromMap(entity)).toList();
+	}
+
+	Future<String> _fromWeb(Uri uri) async {
 		final request = await httpClient.getUrl(uri);
 		final response = await request.close();
-		final body = await response.transform(UTF8.decoder).join();
-		final List mappedJsonData = JSON.decode(body);
-		return mappedJsonData.map((entity) => new BeerData.fromMap(entity)).toList();
+		return await response.transform(UTF8.decoder).join();
+	}
+
+	Future<String> _fromAssets() async {
+		return await rootBundle.loadString('assets/beers.jon');
 	}
 }
