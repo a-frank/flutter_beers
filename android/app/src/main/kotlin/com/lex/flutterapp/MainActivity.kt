@@ -1,21 +1,22 @@
 package com.lex.flutterapp
 
-import android.os.Bundle
-
-import io.flutter.app.FlutterActivity
-import io.flutter.plugins.GeneratedPluginRegistrant
 import android.content.Intent
+import android.os.Bundle
+import io.flutter.app.FlutterActivity
+import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugins.GeneratedPluginRegistrant
 
 class MainActivity() : FlutterActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-        io.flutter.plugin.common.MethodChannel(flutterView, CHANNEL).setMethodCallHandler { call, result ->
+        MethodChannel(flutterView, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "shareBeer") {
                 val intent = Intent()
                 intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_TEXT, "Try this new amazing beer: " + call.arguments)
+                @Suppress("UNCHECKED_CAST")
+                val args = call.arguments as Map<String, String>
+                intent.putExtra(Intent.EXTRA_TEXT, "Try this new amazing beer " + args["name"] + ": " + args["tagLine"])
                 intent.type = "text/plain"
                 startActivity(intent)
                 result.success("OK")
@@ -29,6 +30,6 @@ class MainActivity() : FlutterActivity() {
     }
 
     companion object {
-        val CHANNEL = "beer.flutter/share"
+        const val CHANNEL = "beer.flutter/share"
     }
 }
