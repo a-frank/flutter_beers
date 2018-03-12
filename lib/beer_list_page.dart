@@ -24,18 +24,18 @@ class _BeerListPageState extends State<BeerListPage> {
 
 	Widget _createItemBuilder(BuildContext context, int index) {
 		return new InkWell(
-			child: new Padding(
-				padding: const EdgeInsets.all(8.0),
-				child: new ListTile(
-					leading: new CircleAvatar(
-							backgroundColor: new Color.fromARGB(255, 200, 200, 200),
-							child: new Image(image: new NetworkImage(beerList[index].imageUrl))
+				child: new Padding(
+					padding: const EdgeInsets.all(8.0),
+					child: new ListTile(
+						leading: new CircleAvatar(
+								backgroundColor: new Color.fromARGB(255, 200, 200, 200),
+								child: new Image(image: new NetworkImage(beerList[index].imageUrl))
+						),
+						title: new Text(beerList[index].name),
+						subtitle: new Text(beerList[index].tagLine, maxLines: 1, overflow: TextOverflow.ellipsis),
 					),
-					title: new Text(beerList[index].name),
-					subtitle: new Text(beerList[index].tagLine, maxLines: 1, overflow: TextOverflow.ellipsis),
 				),
-			),
-			onTap: () => _itemClicked(context, index),
+				onTap: () => _itemClicked(context, index)
 		);
 	}
 
@@ -43,7 +43,7 @@ class _BeerListPageState extends State<BeerListPage> {
 	Widget build(BuildContext context) {
 		return new Scaffold(
 				appBar: new AppBar(
-					title: new Text(widget.title),
+						title: new Text(widget.title)
 				),
 				body: new FutureBuilder(
 						future: rest.getBeers(),
@@ -58,10 +58,12 @@ class _BeerListPageState extends State<BeerListPage> {
 									),
 								);
 							}
+
 							beerList = snapshot.data;
+
 							return new ListView.builder(
-								itemBuilder: _createItemBuilder,
-								itemCount: beerList.length,
+									itemBuilder: _createItemBuilder,
+									itemCount: beerList.length
 							);
 						})
 		);

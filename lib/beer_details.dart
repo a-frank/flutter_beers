@@ -7,8 +7,9 @@ import 'package:flutter_app/net/beer_data.dart';
 class BeerDetailsPage extends StatelessWidget {
 	static const share = const MethodChannel('beer.flutter/share');
 
-	BeerDetailsPage({Key key, this.beer}) : super(key: key);
 	final BeerData beer;
+
+	BeerDetailsPage({Key key, this.beer}) : super(key: key);
 
 	Widget _foodPairingItem(BuildContext context, int index) {
 		final pairing = beer.fooPairing[index];
@@ -26,7 +27,7 @@ class BeerDetailsPage extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return new Scaffold(
 				appBar: new AppBar(
-					title: new Text('Beerdetails'),
+						title: new Text('Beerdetails')
 				),
 				floatingActionButton: new FloatingActionButton(
 						child: new Icon(Icons.share),
@@ -45,20 +46,21 @@ class BeerDetailsPage extends StatelessWidget {
 														crossAxisAlignment: CrossAxisAlignment.start,
 														mainAxisSize: MainAxisSize.min,
 														children: <Widget>[
-															new Text(beer.name,
-																style: Theme
-																		.of(context)
-																		.textTheme
-																		.title,
-																softWrap: true,
-																maxLines: 1,
-																overflow: TextOverflow.ellipsis,
+															new Text(
+																	beer.name,
+																	style: Theme
+																			.of(context)
+																			.textTheme
+																			.title,
+																	softWrap: true,
+																	maxLines: 1,
+																	overflow: TextOverflow.ellipsis
 															),
 															new Text(beer.tagLine,
-																style: Theme
-																		.of(context)
-																		.textTheme
-																		.subhead,)
+																	style: Theme
+																			.of(context)
+																			.textTheme
+																			.subhead)
 														])
 										)
 								)
@@ -67,13 +69,15 @@ class BeerDetailsPage extends StatelessWidget {
 							new Container(height: 25.0),
 							new Text(beer.description),
 							new Container(height: 25.0),
-							new Text('Foodpairings:',
-									style: new TextStyle(fontWeight: FontWeight.bold)),
+							new Text(
+									'Foodpairings:',
+									style: new TextStyle(fontWeight: FontWeight.bold)
+							),
 							new Container(height: 10.0),
 							new ListView.builder(
-								shrinkWrap: true,
-								itemCount: beer.fooPairing.length,
-								itemBuilder: _foodPairingItem,
+									shrinkWrap: true,
+									itemCount: beer.fooPairing.length,
+									itemBuilder: _foodPairingItem
 							)
 						],
 					),
