@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/i8n/BeerLocalization.dart';
 import 'package:flutter_app/net/beer_data.dart';
 import 'package:flutter_app/net/beer_rest.dart';
 
 class BeerListPage extends StatefulWidget {
-	BeerListPage({Key key, this.title}) : super(key: key);
-	final String title;
+	BeerListPage({Key key}) : super(key: key);
 
 	@override
 	_BeerListPageState createState() => new _BeerListPageState();
@@ -43,7 +43,9 @@ class _BeerListPageState extends State<BeerListPage> {
 	Widget build(BuildContext context) {
 		return new Scaffold(
 				appBar: new AppBar(
-						title: new Text(widget.title)
+						title: new Text(BeerLocalization
+								.of(context)
+								.title)
 				),
 				body: new FutureBuilder(
 						future: rest.getBeers(),
@@ -53,7 +55,9 @@ class _BeerListPageState extends State<BeerListPage> {
 									child: new Column(
 										children: <Widget>[
 											new CircularProgressIndicator(),
-											new Text('Loading data...')
+											new Text(BeerLocalization
+													.of(context)
+													.loading)
 										],
 									),
 								);

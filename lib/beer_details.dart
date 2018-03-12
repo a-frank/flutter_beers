@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app/i8n/BeerLocalization.dart';
 import 'package:flutter_app/net/beer_data.dart';
 
 class BeerDetailsPage extends StatelessWidget {
@@ -27,7 +28,9 @@ class BeerDetailsPage extends StatelessWidget {
 	Widget build(BuildContext context) {
 		return new Scaffold(
 				appBar: new AppBar(
-						title: new Text('Beerdetails')
+						title: new Text(BeerLocalization
+								.of(context)
+								.details)
 				),
 				floatingActionButton: new FloatingActionButton(
 						child: new Icon(Icons.share),
@@ -70,7 +73,9 @@ class BeerDetailsPage extends StatelessWidget {
 							new Text(beer.description),
 							new Container(height: 25.0),
 							new Text(
-									'Foodpairings:',
+									BeerLocalization
+											.of(context)
+											.foodPairings,
 									style: new TextStyle(fontWeight: FontWeight.bold)
 							),
 							new Container(height: 10.0),
